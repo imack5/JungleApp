@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  require "user_mailer"
 
   def show
     @order = Order.find(params[:id])
@@ -10,6 +11,9 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
+
+      UserMailer.order_confirmation(order).deliver
+
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, flash: { error: order.errors.full_messages.first }
@@ -37,7 +41,8 @@ class OrdersController < ApplicationController
 
   def create_order(stripe_charge)
     order = Order.new(
-      email: params[:stripeEmail],
+      # email: params[:stripeEmail],
+      email: "i_mack5@hotmail.com",
       total_cents: cart_total,
       stripe_charge_id: stripe_charge.id, # returned by stripe
     )
