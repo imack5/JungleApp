@@ -132,5 +132,24 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+User.create!(
+  name: "Iain",
+  email: "i_mack5@hotmail.com",
+  password_digest: "$2a$10$hQd2Lch41BzRiuCjKCexROVRJhcqc7I6tDH406gXUPL/6XD3Xhlq2"
+  )
+
+Review.create!(
+  user_id: 1,
+  product_id: 1,
+  rating: 5,
+  description: "I love it"
+)
+
+Review.create!(
+  user_id: 1,
+  product_id: 1,
+  rating: 3,
+  description: "Nvm its ok"
+)
 
 puts "DONE!"

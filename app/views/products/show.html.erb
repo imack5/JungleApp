@@ -26,6 +26,50 @@
       </div>
     </div>
 
+
+    <div class ="row">
+      <div class="col-sm-12">
+        <h1> New Review </h1>
+        <%= form_for [@product, Review.new] do |form| %>
+
+          <% if form.object.errors.any? %>
+            <div class="alert alert-danger">
+              <strong>The following errors prevented saving:</strong>
+              <ul>
+                <% form.object.errors.full_messages.each do |error| %>
+                  <li><%= error %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.select :rating, [1, 2, 3, 4, 5] %>
+            <%= form.text_area :description, class: 'form-control' %>
+          </div>
+
+          <%= form.submit 'Create Category', class: 'btn btn-primary' %>
+        <% end %>
+
+      </div>
+
+
+      <div class="col-sm-12">
+        <h1> Reviews </h1>
+      </div>
+      <% if @product.reviews.size > 0 %>
+        <% @product.reviews.each do |r| %>
+          <dl class="dl-horizontal">
+            <div class="col-sm-12">
+              <dt> <%= r.user.name %> </dt>
+              <dd> <%= r.description %> Rating: <%= r.rating %> </dd>
+            </div>
+          </dl>
+          <%end%>
+        <% end%>
+    </div>
+
+
   </article>
 
 </section>
