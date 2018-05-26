@@ -28,10 +28,10 @@
 
 
     <div class ="row">
+      <% if current_user %>
       <div class="col-sm-12">
         <h1> New Review </h1>
         <%= form_for [@product, Review.new] do |form| %>
-
           <% if form.object.errors.any? %>
             <div class="alert alert-danger">
               <strong>The following errors prevented saving:</strong>
@@ -44,25 +44,34 @@
           <% end %>
 
           <div class="form-group">
-            <%= form.select :rating, [1, 2, 3, 4, 5] %>
-            <%= form.text_area :description, class: 'form-control' %>
+            <div class="col-sm-11">
+              <%= form.text_area :description, class: 'form-control' %>
+            </div>
+            <div class="col-sm-1">
+              <%= form.select :rating, [1, 2, 3, 4, 5] %>
+            </div>
           </div>
 
-          <%= form.submit 'Create Category', class: 'btn btn-primary' %>
+          <%= form.submit 'Post Review', class: 'btn btn-primary' %>
         <% end %>
-
       </div>
+      <% end %>
 
 
       <div class="col-sm-12">
         <h1> Reviews </h1>
       </div>
       <% if @product.reviews.size > 0 %>
-        <% @product.reviews.each do |r| %>
+        <% @product.reviews.order(created_at: :desc).each do |r| %>
           <dl class="dl-horizontal">
             <div class="col-sm-12">
               <dt> <%= r.user.name %> </dt>
-              <dd> <%= r.description %> Rating: <%= r.rating %> </dd>
+              <dd> <span> <%= r.description %> Rating: <%= r.rating %> </span>
+                <span> <%= link_to product_review_path(@product, r), class: 'btn btn-xs btn-danger', method: :delete do %>
+                  Delete
+                <%end%>
+                </span>
+              </dd>
             </div>
           </dl>
           <%end%>

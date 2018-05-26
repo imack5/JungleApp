@@ -12,7 +12,13 @@ class ReviewsController < ApplicationController
     else
       redirect_to @product
     end
+  end
 
+  def destroy
+    @review = Review.find params[:id]
+    @product = Product.find params[:product_id]
+    @review.destroy
+    redirect_to @product
   end
 
 private
