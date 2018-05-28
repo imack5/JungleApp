@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   describe 'Validations' do
+    let(:category) { Category.create! name: "newCat" }
+
     it 'saves succesfully' do
-      @cat = Category.create(name: "newCat")
-      @product = Product.new(name: "newProd", category: @cat, quantity: 10, price: 20)
+      # @cat = Category.create(name: "newCat")
+      @product = Product.new(name: "newProd", category: category, quantity: 10, price: 20)
       expect(@product).to be_valid
     end
 
